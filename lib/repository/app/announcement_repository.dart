@@ -160,7 +160,7 @@ class AnnouncementRepository {
     }
 
     return UpdateInfo(
-        _tomlCache!['latest_version']['flutter'], _tomlCache!['change_log']);
+        _tomlCache!['flavor_bank']['latest_version']['flutter'], _tomlCache!['flavor_bank']['change_log']);
   }
 
   Celebration parseCelebration(Map<String, dynamic> m) {
