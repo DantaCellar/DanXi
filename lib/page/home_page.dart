@@ -26,6 +26,7 @@ import 'package:dan_xi/model/extra.dart';
 import 'package:dan_xi/model/forum/hole.dart';
 import 'package:dan_xi/model/person.dart';
 import 'package:dan_xi/page/platform_subpage.dart';
+import 'package:dan_xi/page/subpage_bank.dart';
 import 'package:dan_xi/page/subpage_danke.dart';
 import 'package:dan_xi/page/subpage_dashboard.dart';
 import 'package:dan_xi/page/subpage_forum.dart';
@@ -78,6 +79,7 @@ void sendFduholeTokenToWatch(String? token) {
 GlobalKey<NavigatorState> detailNavigatorKey = GlobalKey();
 GlobalKey<ForumSubpageState> forumPageKey = GlobalKey();
 GlobalKey<DankeSubPageState> dankePageKey = GlobalKey();
+GlobalKey<BankSubPageState> bankPageKey = GlobalKey();
 GlobalKey<HomeSubpageState> dashboardPageKey = GlobalKey();
 GlobalKey<TimetableSubPageState> timetablePageKey = GlobalKey();
 const QuickActions quickActions = QuickActions();
@@ -139,8 +141,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         HomeSubpage(key: dashboardPageKey),
       if (!SettingsProvider.getInstance().hideHole)
         ForumSubpage(key: forumPageKey),
-      // Don't show Timetable in visitor mode
       DankeSubPage(key: dankePageKey),
+      BankSubPage(key: bankPageKey),
+      // Don't show Timetable in visitor mode
       if (StateProvider.personInfo.value?.group != UserGroup.VISITOR)
         TimetableSubPage(key: timetablePageKey),
       const SettingsSubpage(),
@@ -697,6 +700,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ? const Icon(Icons.egg_alt)
                       : const Icon(CupertinoIcons.book),
                   label: S.of(context).curriculum,
+                ),
+                BottomNavigationBarItem(
+                  icon: PlatformX.isMaterial(context)
+                      ? const Icon(Icons.account_balance)
+                      : const Icon(CupertinoIcons.lightbulb_fill),
+                  label: "创意银行",
                 ),
                 // Don't show Timetable in visitor mode
                 if (StateProvider.personInfo.value?.group != UserGroup.VISITOR)

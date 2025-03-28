@@ -80,6 +80,7 @@ bool isHtml(String content) {
 void onLogin() {
   forumPageKey.currentState?.refreshList();
   dankePageKey.currentState?.setState(() {});
+  bankPageKey.currentState?.setState(() {});
 }
 
 /// Should be called when user logged out Danta account;
@@ -90,6 +91,7 @@ void onLogin() {
 void onLogout() {
   forumPageKey.currentState?.setState(() {});
   dankePageKey.currentState?.setState(() {});
+  bankPageKey.currentState?.setState(() {});
 }
 
 final RegExp latexRegExp = RegExp(r"<(tex|texLine)>.*?</(tex|texLine)>",
