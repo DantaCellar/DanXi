@@ -327,7 +327,7 @@ class Constant {
       return "https://apps.apple.com/app/id$APPSTORE_APPID";
     }
     if (PlatformX.isAndroid) {
-      return "https://static.fduhole.com/danxi-latest.apk";
+      return "https://danta.fudan.edu.cn/files/danta-ib-latest.apk";
     }
     return "https://danxi.fduhole.com";
   }
