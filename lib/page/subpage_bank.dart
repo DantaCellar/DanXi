@@ -22,6 +22,7 @@ import 'package:dan_xi/page/subpage_forum.dart';
 import 'package:dan_xi/provider/forum_provider.dart';
 import 'package:dan_xi/provider/state_provider.dart';
 import 'package:dan_xi/repository/forum/forum_repository.dart';
+import 'package:dan_xi/util/browser_util.dart';
 import 'package:dan_xi/util/master_detail_view.dart';
 import 'package:dan_xi/util/noticing.dart';
 import 'package:dan_xi/util/platform_universal.dart';
@@ -66,6 +67,12 @@ class BankSubPage extends PlatformSubpage<BankSubPage> {
 class RefreshPageEvent {}
 
 class ResetWebViewEvent {}
+
+const ALLOW_HOSTS = [
+  "fduhole.com",
+  "danta.tech",
+  "danta.fudan.edu.cn",
+];
 
 class BankSubPageState extends PlatformSubpageState<BankSubPage> {
   InAppWebViewController? webViewController;
@@ -151,11 +158,22 @@ class BankSubPageState extends PlatformSubpageState<BankSubPage> {
           nullable: true,
           successBuilder: (_, __) {
             return InAppWebView(
-              initialSettings:
-                  InAppWebViewSettings(userAgent: Constant.version),
+              initialSettings: InAppWebViewSettings(
+                  userAgent: Constant.version,
+                  useShouldOverrideUrlLoading: true),
               initialUrlRequest: urlRequest,
               onWebViewCreated: (InAppWebViewController controller) {
                 webViewController = controller;
+              },
+              shouldOverrideUrlLoading: (InAppWebViewController controller,
+                  NavigationAction navigationAction) {
+                final host = navigationAction.request.url?.host;
+                if (host != null && !ALLOW_HOSTS.contains(host)) {
+                  BrowserUtil.openUrl(
+                      navigationAction.request.url!.toString(), context);
+                  return NavigationActionPolicy.CANCEL;
+                }
+                return NavigationActionPolicy.ALLOW;
               },
             );
           },
